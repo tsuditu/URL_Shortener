@@ -34,11 +34,11 @@ jobs:
         shell: bash                 # Use bash shell for consistent scripting
 
     steps:
-      # Download (checkout) your repository’s latest code
+      # Download (checkout) your repository’s latest code on the VM
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Install the correct Python version from the matrix
+      # Install the correct Python version from the matrix on the VM
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -60,14 +60,16 @@ jobs:
             echo "SECRET_KEY loaded (${#SECRET_KEY} chars)"  # Confirm key is loaded
           fi
 
-      # Apply database migrations to create/update tables
+      # Test if database could be created in CI environment without errors
+      # Although a database will be created by the Run Django tests step, we run this step to catch database creation or errors earlier
       - name: Run migrations
         run: python manage.py migrate --noinput
 
-      # Run Django’s built-in system check (detects config or model issues)
+      # Test if Django runs without configuration errors
       - name: Django system check
         run: python manage.py check
 
-      # Run all Django unit tests (from 'tests.py' in each app)
+      # Test if Django unit tests pass without errors (also tests database interaction)
+      # It creates a test database automatically in the CI environment, other than the one crated by Run migrations step
       - name: Run Django tests
         run: python manage.py test
