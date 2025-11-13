@@ -11,7 +11,7 @@
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
 ✅ | T1.1 | Create GitHub repository `URL_Shortener` | 0.25 days | Public repo with README |
-| T1.2 | Initialize Django backend (`django-admin startproject`) | 0.5 days | Base Django structure |
+✅ | T1.2 | Initialize Django backend (`django-admin startproject`) | 0.5 days | Base Django structure |
 | T1.3 | Initialize React frontend (`npx create-react-app`) | 0.5 days | Base React structure |
 | T1.4 | Link React with Django backend (CORS config) | 0.25 days | Connected environments |
 
