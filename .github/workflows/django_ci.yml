@@ -1,58 +1,73 @@
+# Workflow name that appears in the GitHub Actions dashboard
 name: Django CI (Cross-Platform)
 
 on:
+  # Trigger workflow when code is pushed to this branch
   push:
     branches: [ task/mvp_code_implementation ]
+
+  # Also trigger workflow when a pull request targets the 'main' branch
   pull_request:
     branches: [ main ]
 
 jobs:
   test:
+    # Define the environments (OS and Python versions) to test on
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: [3.11, 3.12, 3.13]
-      fail-fast: false
+        os: [ubuntu-latest, windows-latest, macos-latest]  # Cross-platform testing
+        python-version: [3.11, 3.12, 3.13]                 # Multiple Python versions
+      fail-fast: false  # Continue running other jobs even if one fails
 
+    # Run the job on each OS defined in the matrix above
     runs-on: ${{ matrix.os }}
 
+    # Environment variables available during the job
     env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      DEBUG: "False"
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}  # Loaded from GitHub Secrets
+      DEBUG: "False"                         # Force DEBUG mode off for CI testing
 
+    # Set default working directory and shell for all commands below
     defaults:
       run:
-        working-directory: backend
-        shell: bash
+        working-directory: backend  # All Django commands will run from 'backend' folder
+        shell: bash                 # Use bash shell for consistent scripting
 
     steps:
+      # Download (checkout) your repository’s latest code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Install the correct Python version from the matrix
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
+      # Install project dependencies (Django, libraries, etc.)
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r ../requirements.txt
+          python -m pip install --upgrade pip    # Update pip to latest version
+          pip install -r ../requirements.txt     # Install dependencies listed in requirements.txt
 
+      # Verify that the SECRET_KEY is available (from GitHub Secrets)
       - name: Verify SECRET_KEY availability
         run: |
           if [ -z "$SECRET_KEY" ]; then
-            echo "SECRET_KEY is missing!"
-            exit 1
+            echo "SECRET_KEY is missing!"       # Print an error if it's not found
+            exit 1                              # Exit pipeline with failure
           else
-            echo "SECRET_KEY loaded (${#SECRET_KEY} chars)"
+            echo "SECRET_KEY loaded (${#SECRET_KEY} chars)"  # Confirm key is loaded
           fi
 
+      # Apply database migrations to create/update tables
       - name: Run migrations
         run: python manage.py migrate --noinput
 
+      # Run Django’s built-in system check (detects config or model issues)
       - name: Django system check
         run: python manage.py check
 
+      # Run all Django unit tests (from 'tests.py' in each app)
       - name: Run Django tests
         run: python manage.py test

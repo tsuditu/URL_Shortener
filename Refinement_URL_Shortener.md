@@ -7,7 +7,6 @@
 **Repository:** https://github.com/tsuditu/URL_Shortener.git
 **Showcase Date:** 27 November  
 
-The project aims to develop a simple yet functional **URL Shortening web application** using Django.  
 The project aims to develop a simple yet functional **URL Shortening web application** using Django for the backend and React for the frontend.  
 Users can input long URLs and receive short, shareable links that automatically redirect to the original destination.  
 The project will progress through the following milestones:  
@@ -28,6 +27,7 @@ The project will progress through the following milestones:
 - Create a minimal and intuitive web interface for user interaction using React.  
 - Optionally, expose the functionality as a REST API endpoint.  
 - Deliver a working MVP version for the November showcase.
+- Set up and maintain Continuous Integration (CI) for automated testing and code quality.
 
 ---
 
@@ -41,6 +41,7 @@ The project will progress through the following milestones:
 - SQLite database for persistence  
 - REST API endpoint `/api/shorten` for frontend communication  
 - Documentation and Planner task updates  
+- Continuous Integration (CI) setup and maintenance  
 
 ### ❌ Out of Scope
 - Authentication and user profiles  
@@ -61,6 +62,7 @@ The project will progress through the following milestones:
 | **11/25** | Finetuning | UI/UX polish, bug fixes, optional REST API. | Polished demo-ready app |
 | **11/26** | Demo Prepare | Prepare README, screenshots, and presentation slides. | README.md + Demo Deck |
 | **11/27** | Showcase | Final project presentation & demonstration. | MVP showcased successfully |
+| Ongoing | CI Setup & Maintenance | Configure and maintain CI pipelines for automated testing and code quality checks. | Passing CI builds |
 
 ---
 
@@ -75,6 +77,7 @@ The project will progress through the following milestones:
 | FR5 | Redirection | Short URL redirects to the original one. |
 | FR6 | Interface | Simple React web UI for interaction. |
 | FR7 | API Endpoint (optional) | REST endpoint for JSON requests. |
+| FR8 | CI Integration | Automated tests and code checks run via CI pipelines. |
 
 ---
 
@@ -87,6 +90,7 @@ The project will progress through the following milestones:
 | Maintainability | PEP8 compliance, clear code structure |
 | Usability | Minimal and intuitive React UI |
 | Scalability | Can extend with analytics/API in the future |
+| CI | Automated testing and linting via CI |
 
 ---
 
@@ -97,9 +101,11 @@ The project will progress through the following milestones:
 - Frontend: React  
 - API: Django REST Framework  
 - Version Control: Git + GitHub  
+- CI: GitHub Actions (or similar)
 
 **Flow:**  
-User → React Form → REST API → Django Shorten View → DB Save → Return Short Link → Redirect View → Original URL
+User → React Form → REST API → Django Shorten View → DB Save → Return Short Link → Redirect View → Original URL  
+Code changes → GitHub → CI Pipeline → Automated Tests/Lint → Merge/Deploy
 
 ---
 
@@ -116,6 +122,8 @@ User → React Form → REST API → Django Shorten View → DB Save → Return 
 | | Integrate React with backend API | Dev | 0.25 days |
 | Documentation | Write README.md | Doc | 0.5 days |
 | | Demo slides & showcase | Doc | 0.5 days |
+| CI | Set up CI pipeline (tests/lint) | Dev | 0.5 days |
+| | Maintain CI configuration | Dev | Ongoing |
 
 ---
 
@@ -130,6 +138,7 @@ User → React Form → REST API → Django Shorten View → DB Save → Return 
 | UI | User can shorten link easily in React UI |
 | README | Includes install & usage steps |
 | Demo | App demonstrated successfully |
+| CI | All tests and lint checks pass in CI pipeline |
 
 ---
 
@@ -140,3 +149,5 @@ User → React Form → REST API → Django Shorten View → DB Save → Return 
 - `README.md` with setup & usage  
 - Presentation deck for demo day  
 - Working Django + React app (MVP and production-ready versions)
+- CI configuration files and passing builds
+
