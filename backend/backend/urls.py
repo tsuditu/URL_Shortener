@@ -19,9 +19,14 @@ Including another URLconf
 # Each "path" maps a URL (like /admin/ or /home/) to a specific view (a Python function or class).
 # When someone visits a URL, Django checks this list from top to bottom until it finds a match.
 
+from django.http import JsonResponse
 from django.contrib import admin
 from django.urls import path
 
+def api_test(request):
+    return JsonResponse({"message": "Hello from Django!"})
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/test/', api_test),  # test endpoint
 ]

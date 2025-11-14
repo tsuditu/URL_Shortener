@@ -1,9 +1,19 @@
+import { useState } from "react";
+
 function App() {
+  const [response, setResponse] = useState("");
+
+  const handleClick = async () => {
+    const res = await fetch("http://127.0.0.1:8000/api/test/");
+    const data = await res.json();
+    setResponse(data.message);
+  };
+
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>URL Shortener MVP</h1>
-      <input placeholder="Enter a URL..." style={{ width: "300px", padding: "8px" }} />
-      <button style={{ marginLeft: "10px" }}>Shorten</button>
+      <button onClick={handleClick}>Ping Django</button>
+      <p>{response}</p>
     </div>
   );
 }

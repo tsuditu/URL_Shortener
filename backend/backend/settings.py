@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 ]
 
 # MIDDLEWARE is a list of security and request-processing layers.
@@ -70,6 +71,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+# CORS_ALLOWED_ORIGINS defines which frontend origins are allowed to access this backend via cross-origin requests.
+# This is needed when your frontend (e.g., React at localhost:3000) talks to your Django API during development.
+# Will be modified in production to real frontend domain.
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
 ]
 
 # ROOT_URLCONF tells Django where to find the main URL routing configuration.
