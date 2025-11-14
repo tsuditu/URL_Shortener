@@ -1,23 +1,25 @@
-# Workflow name that appears in the GitHub Actions dashboard
-name: Django CI (Cross-Platform)
+# Workflow name shown in the GitHub Actions tab
+name: Fullstack Build & Test Pipeline
 
 on:
-  # Trigger workflow when code is pushed to this branch
+  # Run workflow when pushing code to this branch
   push:
     branches: [ task/mvp_code_implementation ]
 
-  # Also trigger workflow when a pull request targets the 'main' branch
+  # Also run when a pull request targets the main branch
   pull_request:
     branches: [ main ]
 
 jobs:
-  test:
+  backend-test:
+    name: Django Backend Tests
+
     # Define the environments (OS and Python versions) to test on
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]  # Cross-platform testing
-        python-version: [3.11, 3.12, 3.13]                 # Multiple Python versions
-      fail-fast: false  # Continue running other jobs even if one fails
+        os: [ubuntu-latest, windows-latest, macos-latest] # Cross-platform testing
+        python-version: [3.11, 3.12, 3.13] # Multiple Python versions
+      fail-fast: false # Continue running other jobs even if one fails
 
     # Run the job on each OS defined in the matrix above
     runs-on: ${{ matrix.os }}
@@ -73,3 +75,50 @@ jobs:
       # It creates a test database automatically in the CI environment, other than the one crated by Run migrations step
       - name: Run Django tests
         run: python manage.py test
+
+  frontend-test:
+    name: React Frontend Tests
+
+    # Define environments (OS and Node.js versions) for frontend testing
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]  # Cross-platform frontend testing
+        node-version: [25.1.0]                             # Match local Node.js version for consistency
+      fail-fast: false  # Continue other jobs even if one fails
+
+    # Run the job on each OS defined in the matrix above
+    runs-on: ${{ matrix.os }}
+
+    # Set default working directory and shell for all commands below
+    defaults:
+      run:
+        working-directory: frontend   # All npm commands will run from the 'frontend' folder
+        shell: bash                   # Use bash shell for consistent scripting across OS
+
+    steps:
+      # Step 1: Download (checkout) your repository’s latest code on the VM
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install the Node.js version defined in the matrix on the VM
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'                                              # Enable npm cache for faster build times
+          cache-dependency-path: frontend/package-lock.json         # Path to package-lock.json for accurate caching  
+
+
+      # Step 3: Install project dependencies (React, libraries, etc.)
+      - name: Install dependencies
+        run: npm ci                    # Clean install using package-lock.json for reproducibility
+
+      # Step 4: Run React unit tests (non-interactive mode for CI)
+      - name: Run React tests
+        run: npm test -- --watchAll=false  # Run tests once without interactive watch mode
+
+      # Step 5: Build React app to verify that production build compiles successfully
+      - name: Build React app
+        run: npm run build
+
+
