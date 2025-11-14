@@ -17,11 +17,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from the .env file located in the project root.
-# This allows you to keep secret keys and sensitive info out of your code.
-env_path = BASE_DIR / '.env'
-env = dotenv_values(env_path)
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -32,6 +27,13 @@ if os.environ.get('GITHUB_ACTIONS') == 'true':
     # Running in GitHub Actions, get secret from environment variable
     SECRET_KEY = os.environ.get('SECRET_KEY')
 else:
+    # Load environment variables from the .env file located in the project root.
+    # This allows you to keep secret keys and sensitive info out of your code.
+    env_path = BASE_DIR / '.env'
+    if Path(env_path).exists():
+        env = dotenv_values(env_path)
+    else:
+        raise FileNotFoundError("Warning: .env file not found. Please create one in the project root.")
     # Running locally, get secret from .env file
     SECRET_KEY = env.get('SECRET_KEY')
 
