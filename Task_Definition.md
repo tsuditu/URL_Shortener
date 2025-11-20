@@ -1,9 +1,9 @@
 # 🧩 Product Backlog – Django URL Shortener (Django + React)
 
-## Epic 1: 🏗️ Project Setup & Planning
+## Epic 1: Project Setup & Planning ✅
 **Goal:** Establish the foundation for the project by defining scope, stack, and documentation.  
 
-### Feature 1.1 – Project Initialization  
+### Feature 1.1 – Project Initialization ✅ 
 **User Story:**  
 > As a developer, I want to set up the project repository and environment so that I can begin building the Django + React application.  
 
@@ -16,20 +16,36 @@
 ✅ | T1.4 | Link React with Django backend (CORS config) | 0.25 days | Connected environments |
 ✅ | T1.5 | Set up CI pipeline (GitHub Actions) | 0.5 days | Automated tests and linting on push/pull request |
 
-✅ ### Feature 1.2 – Documentation & Definition  
+### Feature 1.2 – Documentation & Definition ✅ 
 **User Story:**  
 > As a developer, I need to define the scope, milestones, and tasks of the project so that I can track progress clearly.  
 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-✅ | T1.5 | Write `Refinement_URL_Shortener.md` | 0.5 days | Refinement document |
-✅ | T1.6 | Write `Task_Definition.md` | 0.5 days | Task planning document |
-✅ | T1.7 | Create `Backlog_URL_Shortener.md` | 0.5 days | Backlog structure file |
+✅ | T1.6 | Write `Refinement_URL_Shortener.md` | 0.5 days | Refinement document |
+✅ | T1.7 | Write `Task_Definition.md` | 0.5 days | Task planning document |
 ✅ | T1.8 | Upload documentation to Planner and GitHub | 0.25 days | Linked files visible in repo |
 
 
-## Epic 2: ⚙️ Core Functionality – Backend
+## Epic 2: MVP Delivery – URL Shortener Application ✅
+**Goal:** Deliver a fully functional Minimum Viable Product (MVP) for the URL Shortener project, integrating Django (backend) and React (frontend) into a single, working fullstack application with CI/CD validation.
+
+**Description:**
+This epic consolidates all key deliverables required to demonstrate a complete end-to-end solution — from environment setup and backend API development to frontend integration, testing, and documentation.
+It ensures the application can shorten URLs, display the generated short links, and handle redirects in a controlled, testable environment.
+
+### Feature 2.1 – MVP ✅
+| ID | Task | Description | Status |
+|----|---------|-------------|--------|
+✅ | T2.1 | Backend API Implementation | Develop `/api/shorten/` endpoint with hashing-based URL shortening and JSON response. |
+✅ | T2.2 | Redirect Logic | Implement redirect handling for short URLs (`/<short_code>`). |
+✅ | T2.3 | Frontend Integration | Connect React app to Django backend via `fetch()` for URL shortening requests. |
+✅ | T2.4 | UI/UX Development | Build simple user interface (input, button, display link) with minimal styling. |
+✅ | T2.5 | CORS & Security Configuration | Configure CORS, SECRET_KEY, DEBUG, and allowed origins for secure API communication. |
+✅ | T2.6 | CI/CD Setup | Add GitHub Actions pipeline for automated testing (Python + Node). |
+
+## Epic 3: Core Functionality – Backend
 **Goal:** Implement the logic for URL shortening and redirection with database integration.
 
 ### Feature 2.1 – URL Shortening Logic  
@@ -40,25 +56,25 @@
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
 | T2.1 | Create `URL` model (`original_url`, `short_code`, `created_at`) | 0.5 days | Django model in `models.py` |
-| T2.2 | Generate unique short code (random string) | 0.5 days | Utility function for code creation |
-| T2.3 | Implement `shorten` API endpoint (`/api/shorten`) | 1 day | JSON response with short URL |
+✅ | T2.2 | Generate unique short code (random string | the same for the same URL input) | 0.5 days |
+✅ | T2.3 | Implement `shorten` API endpoint (`/api/shorten`) | 1 day | JSON response with short URL |
 | T2.4 | Implement validation for input URLs | 0.5 days | URL check in serializer/view |
 | T2.5 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
 
 
-### Feature 2.2 – Redirection Logic  
+### Feature 2.2 – Redirection Logic ✅  
 **User Story:**  
 > As a user, I want to access the short URL and be redirected to the original link instantly.  
 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T2.6 | Implement redirect view (`/<short_code>`) | 0.5 days | View + URL mapping |
-| T2.7 | Add error handling for invalid codes | 0.25 days | 404 page |
-| T2.8 | Test redirection flow manually | 0.25 days | Verified working redirects |
+✅ | T2.6 | Implement redirect view (`/<short_code>`) | 0.5 days | View + URL mapping |
+✅ | T2.7 | Add error handling for invalid codes | 0.25 days | 404 page |
+✅ | T2.8 | Test redirection flow manually | 0.25 days | Verified working redirects |
 
 
-## Epic 3: 💻 Frontend Development – React
+## Epic 4: Frontend Development – React
 **Goal:** Build a simple and intuitive UI to interact with the shortening service.
 
 ### Feature 3.1 – React Components  
@@ -75,7 +91,7 @@
 | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
 
-## Epic 4: 🧪 Testing & Code Review
+## Epic 5: Testing & Code Review
 **Goal:** Validate functionality, ensure quality, and fix bugs.
 
 ### Feature 4.1 – Backend Testing  
@@ -101,7 +117,7 @@
 | T4.5 | Apply suggested improvements | 0.5 days | Updated branch in repo |
 
 
-## Epic 5: 🚀 Production Ready & Finetuning
+## Epic 6: Production Ready & Finetuning
 **Goal:** Finalize a stable version, improve performance, and prepare for showcase.
 
 ### Feature 5.1 – Final Optimization  
@@ -117,7 +133,7 @@
 | T5.4 | Optional: Add analytics/logging | 0.25 days | Console log tracking |
 
 
-## Epic 6: 📄 Documentation & Demo
+## Epic 7: Documentation & Demo
 **Goal:** Create supporting materials and finalize project delivery.
 
 ### Feature 6.1 – Project Documentation  
@@ -133,7 +149,7 @@
 | T6.4 | Record optional video demo | 0.5 days | Showcase recording |
 
 
-## Epic 7: 🎤 Showcase & Delivery
+## Epic 8: Showcase & Delivery
 **Goal:** Present the final project and submit all deliverables.
 
 ### Feature 7.1 – Final Presentation  
@@ -147,11 +163,12 @@
 | T7.3 | Submit final code + documentation | 0.25 days | GitHub repo and slides uploaded |
 
 
-## 📅 Total Estimation Summary
+## Total Estimation Summary
 
 | Epic | Estimated Time | Focus |
 |------|----------------|-------|
 | Project Setup & Planning | 2 days | Initialization, docs & CI |
+| MVP Delivery – URL Shortener Application | 0 days | Fullstack MVP |
 | Core Functionality – Backend | 3 days | API + database |
 | Frontend Development – React | 2 days | UI integration |
 | Testing & Code Review | 1.5 days | Quality assurance |

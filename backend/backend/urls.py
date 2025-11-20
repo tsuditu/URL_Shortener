@@ -21,10 +21,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from backend import views  # import function from views.py
+from backend import views
 
+# Define relative URL paths, which will be appended to the base backend URL (e.g., http://
 urlpatterns = [
     path('admin/', admin.site.urls),                # Django admin interface (optional)
     path('api/shorten/', views.api_shorten),        # URL for shortening API
-    path('<str:code>/', views.redirect_short_url),  # Redirect short URL to original URL
+    path('<str:code>/', views.redirect_short_url),  # Redirect short URL to original URL | <str:code> captures any string after the base URL (e.g., http://127.0.0.1:8000/abc123)
 ]
