@@ -23,6 +23,12 @@ function App() {
       return;
     }
 
+    const urlPattern = /^(https?:\/\/)[\w-]+(\.[\w-]+)+[/#?]?.*$/;
+    if (!urlPattern.test(inputUrl)) {
+      alert("Please enter a valid URL starting with http:// or https://");
+      return;
+    }
+
     try {
       // Send POST request to backend API with the input URL
       const res = await fetch("http://127.0.0.1:8000/api/shorten/", {

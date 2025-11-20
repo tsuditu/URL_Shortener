@@ -3,9 +3,10 @@ Views module for URL Shortener MVP.
 Defines the API endpoint for shortening URLs.
 """
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 import json
 import hashlib
 
@@ -21,6 +22,13 @@ def api_shorten(request):
 
         if not original_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
+
+        # Validate proper URL format
+        validator = URLValidator()
+        try:
+            validator(original_url)
+        except ValidationError:
+            return JsonResponse({"error": "Invalid URL format"}, status=400)
 
         # Generate a short code from the original URL using MD5 hash (will be the same for the same URL)
         short_code = hashlib.md5(original_url.encode()).hexdigest()[:6]
