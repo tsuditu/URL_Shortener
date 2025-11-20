@@ -55,10 +55,10 @@ It ensures the application can shorten URLs, display the generated short links, 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T2.1 | Create `URL` model (`original_url`, `short_code`, `created_at`) | 0.5 days | Django model in `models.py` |
+✅ | T2.1 | Define and migrate shortener_url model to database (original_url, short_code, created_at) | 0.5 days | Django model created and applied via migrations
 ✅ | T2.2 | Generate unique short code (random string | the same for the same URL input) | 0.5 days |
 ✅ | T2.3 | Implement `shorten` API endpoint (`/api/shorten`) | 1 day | JSON response with short URL |
-| T2.4 | Implement validation for input URLs | 0.5 days | URL check in serializer/view |
+✅ | T2.4 | Implement validation for input URLs | 0.5 days | URL check in serializer/view |
 | T2.5 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
 
 

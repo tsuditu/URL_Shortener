@@ -1,6 +1,6 @@
 """
-Views module for URL Shortener MVP.
-Defines the API endpoint for shortening URLs.
+This module contains the view functions for the URL Shortener application.
+It defines API endpoints for shortening URLs and handling redirects from short codes to original URLs.
 """
 
 from django.http import JsonResponse, HttpResponseRedirect
