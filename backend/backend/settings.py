@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'corsheaders',                  # CORS support (ensures communication between frontend and backend)
+    'shortener',                    # URL shortener app
 ]
 
 # MIDDLEWARE is a list of security and request-processing layers.
@@ -73,7 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', # here is applied CORS from INSTALLED_APPS, as a security measure
 ]
 
 # CORS_ALLOWED_ORIGINS defines which frontend origins are allowed to access this backend via cross-origin requests.
