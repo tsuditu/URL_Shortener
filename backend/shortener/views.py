@@ -7,12 +7,10 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from .models import URL
 import json
 import hashlib
 
-
-# Dictionary to temporarily store URLs (for MVP demo)
-short_urls = {}
 
 @csrf_exempt
 def api_shorten(request):
@@ -30,10 +28,21 @@ def api_shorten(request):
         except ValidationError:
             return JsonResponse({"error": "Invalid URL format"}, status=400)
 
+        # Check if the URL already exists in the DB
+        existing = URL.objects.filter(original_url=original_url).first()
+        if existing:
+            short_url = f"http://127.0.0.1:8000/{existing.short_code}"
+            return JsonResponse({
+                'original_url': existing.original_url,
+                'short_url': short_url
+            })
+        
         # Generate a short code from the original URL using MD5 hash (will be the same for the same URL)
         short_code = hashlib.md5(original_url.encode()).hexdigest()[:6]
-        short_urls[short_code] = original_url  # store mapping temporarily
-        short_url = f"http://127.0.0.1:8000/{short_code}"
+
+        # Save the URL in the database
+        new_url = URL.objects.create(original_url=original_url, short_code=short_code)
+        short_url = f"http://127.0.0.1:8000/{new_url.short_code}"
 
         return JsonResponse({
             "original_url": original_url,
@@ -45,8 +54,22 @@ def api_shorten(request):
 
 # New view: when visiting /<code>, redirect to original URL
 def redirect_short_url(request, code):
-    # Look up the original URL from the short code (short code is passed as 'code' parameter in urls.py)
-    original_url = short_urls.get(code)
-    if original_url:
-        return HttpResponseRedirect(original_url)
-    return JsonResponse({"error": "Short URL not found"}, status=404)
+    """
+    Look up the original URL from the short code (short code is passed as 'code' parameter in urls.py)
+    If found, redirect the user to the original URL.
+    Otherwise, return a 404-style JSON error.
+    """
+    try:
+        # Query the database for the given short_code
+        url_obj = URL.objects.filter(short_code=code).first()
+
+        # If the record exists, redirect to the original URL
+        if url_obj:
+            return HttpResponseRedirect(url_obj.original_url)
+
+        # If no record found, return 404 JSON response
+        return JsonResponse({"error": "Short URL not found"}, status=404)
+
+    except Exception as e:
+        # Handle unexpected server errors gracefully
+        return JsonResponse({"error": str(e)}, status=500)

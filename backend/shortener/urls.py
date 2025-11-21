@@ -7,6 +7,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('api/shorten/', views.api_shorten, name='api_shorten'),
-    path('<str:code>/', views.redirect_short_url, name='redirect_short_url'),
+    path('api/shorten/', views.api_shorten, name='api_shorten_endpoint'),
+    path('<str:code>/', views.redirect_short_url, name='redirect_short_url_endpoint'),
 ]

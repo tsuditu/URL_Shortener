@@ -59,7 +59,8 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T2.2 | Generate unique short code (random string | the same for the same URL input) | 0.5 days |
 ✅ | T2.3 | Implement `shorten` API endpoint (`/api/shorten`) | 1 day | JSON response with short URL |
 ✅ | T2.4 | Implement validation for input URLs | 0.5 days | URL check in serializer/view |
-| T2.5 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
+✅ | T2.5 | Update shortening logic to use database for saving and retrieving URLs | 1 day | Persistent URL storage and lookup using Django ORM |
+| T2.6 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
 
 
 ### Feature 2.2 – Redirection Logic ✅  
