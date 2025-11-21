@@ -72,7 +72,7 @@ jobs:
         run: python manage.py check
 
       # Test if Django unit tests pass without errors (also tests database interaction)
-      # It creates a test database automatically in the CI environment, other than the one crated by Run migrations step
+      # It creates a test database automatically in the CI environment, other than the one created by Run migrations step
       - name: Run Django tests
         run: python manage.py test
 

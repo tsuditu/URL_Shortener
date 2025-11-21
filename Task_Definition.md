@@ -45,10 +45,10 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T2.5 | CORS & Security Configuration | Configure CORS, SECRET_KEY, DEBUG, and allowed origins for secure API communication. |
 ✅ | T2.6 | CI/CD Setup | Add GitHub Actions pipeline for automated testing (Python + Node). |
 
-## Epic 3: Core Functionality – Backend
+## Epic 3: Core Functionality – Backend ✅
 **Goal:** Implement the logic for URL shortening and redirection with database integration.
 
-### Feature 2.1 – URL Shortening Logic  
+### Feature 2.1 – URL Shortening Logic ✅
 **User Story:**  
 > As a user, I want to submit a long URL and get a short version that I can easily share.  
 
@@ -60,7 +60,7 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T2.3 | Implement `shorten` API endpoint (`/api/shorten`) | 1 day | JSON response with short URL |
 ✅ | T2.4 | Implement validation for input URLs | 0.5 days | URL check in serializer/view |
 ✅ | T2.5 | Update shortening logic to use database for saving and retrieving URLs | 1 day | Persistent URL storage and lookup using Django ORM |
-| T2.6 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
+✅ | T2.6 | Write unit tests for API logic | 0.5 days | `pytest` or Django test cases |
 
 
 ### Feature 2.2 – Redirection Logic ✅  
