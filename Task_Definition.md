@@ -87,7 +87,7 @@ It ensures the application can shorten URLs, display the generated short links, 
 |----|------|-------------|--------------|
 | T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
 | T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
-| T3.3 | Connect frontend to Django API | 0.5 days | Fetch POST request integration |
+✅ | T3.3 | Connect frontend to Django API | 0.5 days | Fetch POST request integration |
 | T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
 | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
@@ -129,9 +129,8 @@ It ensures the application can shorten URLs, display the generated short links, 
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
 | T5.1 | Refactor code & add comments | 0.5 days | Clean readable code |
-| T5.2 | Add `requirements.txt` & `.gitignore` | 0.25 days | Production-ready repo |
+✅ | T5.2 | Add `requirements.txt` & `.gitignore` | 0.25 days | Production-ready repo |
 | T5.3 | Conduct system test (backend + frontend) | 0.5 days | Stable app build |
-| T5.4 | Optional: Add analytics/logging | 0.25 days | Console log tracking |
 
 
 ## Epic 7: Documentation & Demo
@@ -147,7 +146,6 @@ It ensures the application can shorten URLs, display the generated short links, 
 | T6.1 | Write `README.md` | 0.5 days | Setup and usage guide |
 | T6.2 | Add screenshots and examples | 0.25 days | Visual proof of UI |
 | T6.3 | Create demo slides (PowerPoint/Google Slides) | 0.5 days | Presentation deck |
-| T6.4 | Record optional video demo | 0.5 days | Showcase recording |
 
 
 ## Epic 8: Showcase & Delivery
