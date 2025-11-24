@@ -91,6 +91,16 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
 ✅ | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
+### Feature 3.2 – Frontend Testing Enhancements ✅
+**User Story:**  
+> As a developer, I want automated tests for React components so that I can ensure UI reliability and catch regressions early.
+
+**Tasks**
+| ID   | Task | Estimation | Deliverable |
+|------|------|------------|-------------|
+✅ | T3.6 | Add unit tests for React components (`App.test.js`, `UrlInput.test.js`, `ShortLink.test.js`) | 0.5 days | Tests verifying rendering, user input, and conditional logic |
+✅ | T3.7 | Integrate React Testing Library and Jest DOM matchers | 0.25 days | Readable, behavior-driven tests using`@testing-library/react`      |
+✅ | T3.8 | Configure test execution in CI/CD | 0.25 days  | Pipeline runs `npm test -- --watchAll=false` and fails on test fail |
 
 ## Epic 5: Testing & Code Review
 **Goal:** Validate functionality, ensure quality, and fix bugs.
@@ -102,8 +112,8 @@ It ensures the application can shorten URLs, display the generated short links, 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T4.1 | Unit test URL model and shortener logic | 0.5 days | Django test results |
-| T4.2 | Integration test for API responses | 0.5 days | API tested with Postman |
+✅ | T4.1 | Unit test URL model and shortener logic | 0.5 days | Django test results |
+✅ | T4.2 | Integration test for API responses | 0.5 days | API tested with Postman |
 | T4.3 | Linting and code cleanup (PEP8) | 0.25 days | Clean CI-ready code |
 
 
