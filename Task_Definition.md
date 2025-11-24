@@ -75,22 +75,32 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T2.8 | Test redirection flow manually | 0.25 days | Verified working redirects |
 
 
-## Epic 4: Frontend Development – React
+## Epic 4: Frontend Development – React ✅
 **Goal:** Build a simple and intuitive UI to interact with the shortening service.
 
-### Feature 3.1 – React Components  
+### Feature 3.1 – React Components  ✅
 **User Story:**  
 > As a user, I want a simple interface where I can input my long URL and receive the short version visually.  
 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
-| T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
-| T3.3 | Connect frontend to Django API | 0.5 days | Fetch POST request integration |
-| T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
-| T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
+✅ | T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
+✅ | T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
+✅ | T3.3 | Connect frontend to Django backend | 0.5 days | Fetch POST request integration |
+✅ | T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
+✅ | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
+### Feature 3.2 – Frontend Testing Enhancements ✅
+**User Story:**  
+> As a developer, I want automated tests for React components so that I can ensure UI reliability and catch regressions early.
+
+**Tasks**
+| ID   | Task | Estimation | Deliverable |
+|------|------|------------|-------------|
+✅ | T3.6 | Add unit tests for React components (`App.test.js`, `UrlInput.test.js`, `ShortLink.test.js`) | 0.5 days | Tests verifying rendering, user input, and conditional logic |
+✅ | T3.7 | Integrate React Testing Library and Jest DOM matchers | 0.25 days | Readable, behavior-driven tests using`@testing-library/react`      |
+✅ | T3.8 | Configure test execution in CI/CD | 0.25 days  | Pipeline runs `npm test -- --watchAll=false` and fails on test fail |
 
 ## Epic 5: Testing & Code Review
 **Goal:** Validate functionality, ensure quality, and fix bugs.
@@ -102,8 +112,8 @@ It ensures the application can shorten URLs, display the generated short links, 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T4.1 | Unit test URL model and shortener logic | 0.5 days | Django test results |
-| T4.2 | Integration test for API responses | 0.5 days | API tested with Postman |
+✅ | T4.1 | Unit test URL model and shortener logic | 0.5 days | Django test results |
+✅ | T4.2 | Integration test for API responses | 0.5 days | API tested with Postman |
 | T4.3 | Linting and code cleanup (PEP8) | 0.25 days | Clean CI-ready code |
 
 
@@ -129,9 +139,8 @@ It ensures the application can shorten URLs, display the generated short links, 
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
 | T5.1 | Refactor code & add comments | 0.5 days | Clean readable code |
-| T5.2 | Add `requirements.txt` & `.gitignore` | 0.25 days | Production-ready repo |
+✅ | T5.2 | Add `requirements.txt` & `.gitignore` | 0.25 days | Production-ready repo |
 | T5.3 | Conduct system test (backend + frontend) | 0.5 days | Stable app build |
-| T5.4 | Optional: Add analytics/logging | 0.25 days | Console log tracking |
 
 
 ## Epic 7: Documentation & Demo
@@ -147,7 +156,6 @@ It ensures the application can shorten URLs, display the generated short links, 
 | T6.1 | Write `README.md` | 0.5 days | Setup and usage guide |
 | T6.2 | Add screenshots and examples | 0.25 days | Visual proof of UI |
 | T6.3 | Create demo slides (PowerPoint/Google Slides) | 0.5 days | Presentation deck |
-| T6.4 | Record optional video demo | 0.5 days | Showcase recording |
 
 
 ## Epic 8: Showcase & Delivery

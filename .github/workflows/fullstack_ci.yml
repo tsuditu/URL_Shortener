@@ -4,7 +4,7 @@ name: Fullstack Build & Test Pipeline
 on:
   # Run workflow when pushing code to this branch
   push:
-    branches: [ task/core_functionality_backend ]
+    branches: [ main ]
 
   # Also run when a pull request targets the main branch
   pull_request:
@@ -71,10 +71,12 @@ jobs:
       - name: Django system check
         run: python manage.py check
 
-      # Test if Django unit tests pass without errors (also tests database interaction)
-      # It creates a test database automatically in the CI environment, other than the one created by Run migrations step
-      - name: Run Django tests
-        run: python manage.py test
+      # Run Django unit tests (includes database interaction)
+      # A temporary test database is automatically created in the CI environment
+      # This is separate from the one created during the "Run migrations" step
+      - name: Run pytest tests
+        run: pytest --maxfail=1 --disable-warnings -q
+
 
   frontend-test:
     name: React Frontend Tests
