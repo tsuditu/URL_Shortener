@@ -7,6 +7,7 @@ from shortener.models import URL
 # and destroys it afterward, ensuring isolation and no side effects
 # on the real project database.
 
+
 @pytest.mark.django_db
 def test_redirect_valid_short_code(client):
     """

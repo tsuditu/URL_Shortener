@@ -8,6 +8,7 @@ from shortener.models import URL
 # and destroys it afterward, ensuring isolation and no side effects
 # on the real project database.
 
+
 @pytest.mark.django_db
 def test_shorten_url_creation(client):
     """
@@ -36,8 +37,8 @@ def test_duplicate_url_returns_same_code(client):
     Test that the same URL always returns the same short code (deterministic hash).
     """
     data = {"url": "https://www.djangoproject.com"}
-    first_response = client.post(reverse("api_shorten_endpoint"), data, content_type="application/json")
-    second_response = client.post(reverse("api_shorten_endpoint"), data, content_type="application/json")
+    client.post(reverse("api_shorten_endpoint"), data, content_type="application/json")
+    client.post(reverse("api_shorten_endpoint"), data, content_type="application/json")
 
     first_code = URL.objects.first().short_code
     second_code = URL.objects.last().short_code

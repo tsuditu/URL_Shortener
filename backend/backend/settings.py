@@ -74,7 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', # here is applied CORS from INSTALLED_APPS, as a security measure
+    'corsheaders.middleware.CorsMiddleware',    # here is applied CORS from INSTALLED_APPS, as a security measure
 ]
 
 # CORS_ALLOWED_ORIGINS defines which frontend origins are allowed to access this backend via cross-origin requests.
