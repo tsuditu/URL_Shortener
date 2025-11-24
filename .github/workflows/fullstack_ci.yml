@@ -4,7 +4,7 @@ name: Fullstack Build & Test Pipeline
 on:
   # Run workflow when pushing code to this branch
   push:
-    branches: [ main ]
+    branches: [ task/finetuning ]
 
   # Also run when a pull request targets the main branch
   pull_request:
@@ -70,6 +70,12 @@ jobs:
       # Test if Django runs without configuration errors
       - name: Django system check
         run: python manage.py check
+
+      # Lint Python code with flake8, ignoring E501 (line too long), W292 (no newline at end), W503 (line break before binary operator)
+      - name: Lint with flake8
+        run: |
+            echo "Running full-project Python linting..."
+            flake8 . --ignore=E501,W292,W503
 
       # Run Django unit tests (includes database interaction)
       # A temporary test database is automatically created in the CI environment

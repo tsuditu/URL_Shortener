@@ -36,7 +36,6 @@ def api_shorten(request):
                 'original_url': existing.original_url,
                 'short_url': short_url
             })
-        
         # Generate a short code from the original URL using MD5 hash (will be the same for the same URL)
         short_code = hashlib.md5(original_url.encode()).hexdigest()[:6]
 

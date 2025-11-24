@@ -12,4 +12,3 @@
 # - Django settings are not configured (ImproperlyConfigured errors).
 # - INSTALLED_APPS and ORM are not initialized.
 # - You must manually call django.setup() and configure the environment.
-

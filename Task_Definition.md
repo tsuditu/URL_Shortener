@@ -102,10 +102,10 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T3.7 | Integrate React Testing Library and Jest DOM matchers | 0.25 days | Readable, behavior-driven tests using`@testing-library/react`      |
 ✅ | T3.8 | Configure test execution in CI/CD | 0.25 days  | Pipeline runs `npm test -- --watchAll=false` and fails on test fail |
 
-## Epic 5: Testing & Code Review
+## Epic 5: Testing & Code Review ✅
 **Goal:** Validate functionality, ensure quality, and fix bugs.
 
-### Feature 4.1 – Backend Testing  
+### Feature 4.1 – Backend Testing  ✅
 **User Story:**  
 > As a developer, I want automated tests to verify that shortening and redirection logic works correctly.  
 
@@ -114,33 +114,33 @@ It ensures the application can shorten URLs, display the generated short links, 
 |----|------|-------------|--------------|
 ✅ | T4.1 | Unit test URL model and shortener logic | 0.5 days | Django test results |
 ✅ | T4.2 | Integration test for API responses | 0.5 days | API tested with Postman |
-| T4.3 | Linting and code cleanup (PEP8) | 0.25 days | Clean CI-ready code |
+✅ | T4.3 | Linting and code cleanup (PEP8) | 0.25 days | Clean CI-ready code |
 
 
-### Feature 4.2 – Code Review  
+### Feature 4.2 – Code Review ✅  
 **User Story:**  
 > As a peer reviewer, I want to review and provide feedback on the code to ensure maintainability and structure.  
 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T4.4 | Conduct code review with mentor | 0.5 days | Feedback documented |
-| T4.5 | Apply suggested improvements | 0.5 days | Updated branch in repo |
+✅ | T4.4 | Conduct code review with mentor | 0.5 days | Feedback documented |
+✅ | T4.5 | Apply suggested improvements | 0.5 days | Updated branch in repo |
 
 
-## Epic 6: Production Ready & Finetuning
+## Epic 6: Production Ready & Finetuning ✅
 **Goal:** Finalize a stable version, improve performance, and prepare for showcase.
 
-### Feature 5.1 – Final Optimization  
+### Feature 5.1 – Final Optimization  ✅
 **User Story:**  
 > As a developer, I want the app to be polished and performant before the final presentation.  
 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T5.1 | Refactor code & add comments | 0.5 days | Clean readable code |
+✅ | T5.1 | Refactor code & add comments | 0.5 days | Clean readable code |
 ✅ | T5.2 | Add `requirements.txt` & `.gitignore` | 0.25 days | Production-ready repo |
-| T5.3 | Conduct system test (backend + frontend) | 0.5 days | Stable app build |
+✅ | T5.3 | Conduct system test (backend + frontend) | 0.5 days | Stable app build |
 
 
 ## Epic 7: Documentation & Demo
