@@ -85,11 +85,11 @@ It ensures the application can shorten URLs, display the generated short links, 
 **Tasks**
 | ID | Task | Estimation | Deliverable |
 |----|------|-------------|--------------|
-| T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
-| T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
-✅ | T3.3 | Connect frontend to Django API | 0.5 days | Fetch POST request integration |
+✅ | T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
+✅ | T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
+✅ | T3.3 | Connect frontend to Django backend | 0.5 days | Fetch POST request integration |
 | T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
-| T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
+✅ | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
 
 ## Epic 5: Testing & Code Review
