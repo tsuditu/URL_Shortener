@@ -75,10 +75,10 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T2.8 | Test redirection flow manually | 0.25 days | Verified working redirects |
 
 
-## Epic 4: Frontend Development – React
+## Epic 4: Frontend Development – React ✅
 **Goal:** Build a simple and intuitive UI to interact with the shortening service.
 
-### Feature 3.1 – React Components  
+### Feature 3.1 – React Components  ✅
 **User Story:**  
 > As a user, I want a simple interface where I can input my long URL and receive the short version visually.  
 
@@ -88,7 +88,7 @@ It ensures the application can shorten URLs, display the generated short links, 
 ✅ | T3.1 | Create form component (`UrlInput.jsx`) | 0.5 days | Input field for URL |
 ✅ | T3.2 | Create result display component (`ShortLink.jsx`) | 0.25 days | Displays generated short link |
 ✅ | T3.3 | Connect frontend to Django backend | 0.5 days | Fetch POST request integration |
-| T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
+✅ | T3.4 | Handle errors and loading states | 0.25 days | UX improvements |
 ✅ | T3.5 | Apply basic Bootstrap/Reactstrap styling | 0.25 days | Responsive UI |
 
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UrlInput from './components/UrlInput';
 import ShortLink from './components/ShortLink';
+import { Spinner } from 'reactstrap';
 
 // Main React component of the app.
 // When the project runs with `npm start`, React automatically calls this function
@@ -64,13 +65,23 @@ function App() {
   return (
     <div className="container text-center mt-5">
       <h1>URL Shortener MVP</h1>
+
+      {/* Central spinner displayed while waiting for backend response */}
+      {loading && (
+        <div className="d-flex flex-column align-items-center mt-4">
+          <Spinner color="primary" />
+          <p className="mt-2 text-muted">Generating short link...</p>
+        </div>
+      )}
+
+      {/* Input form and short link display */}
       <UrlInput
         inputUrl={inputUrl}
         setInputUrl={setInputUrl}
         handleShorten={handleShorten}
         loading={loading}
       />
-      <ShortLink shortUrl={shortUrl} />
+      {!loading && <ShortLink shortUrl={shortUrl} />}
     </div>
   );
 }
