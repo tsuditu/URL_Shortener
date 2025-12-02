@@ -66,12 +66,5 @@ REM -------------------------------------------------------
 echo Starting React frontend...
 start "" cmd /k "cd frontend && npm start"
 
-REM -------------------------------------------------------
-REM Open browser
-REM -------------------------------------------------------
-echo Opening browser...
-timeout /t 4 >nul
-start http://localhost:3000
-
 echo Application started successfully!
 pause
