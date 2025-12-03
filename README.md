@@ -4,6 +4,7 @@ A full-stack URL shortener application with a Django backend and a React fronten
 
 ## Project Structure
 
+- `.github\workflows` - CI/CD file
 - `backend/` - Django backend for URL shortening and redirection
 - `frontend/` - React frontend for user interaction
 - `docs/` - Documentation and refinement notes
