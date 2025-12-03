@@ -4,7 +4,7 @@ name: Fullstack Build & Test Pipeline
 on:
   # Run workflow when pushing code to this branch
   push:
-    branches: [ task/add_presentation ]
+    branches: [ main ]
 
   # Also run when a pull request targets the main branch
   pull_request:
