@@ -2,6 +2,9 @@
 """
 This module defines the database models for the URL Shortener application.
 It includes the URL model, which stores the original URL, its shortened code, and the creation timestamp.
+
+VERY IMPORTANT: Please use the following command if you add or modify models:
+    python manage.py makemigrations shortener
 """
 from django.db import models
 
