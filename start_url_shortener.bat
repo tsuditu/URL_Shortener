@@ -37,6 +37,29 @@ echo Activating virtual environment...
 call .venv\Scripts\activate
 
 REM -------------------------------------------------------
+REM Check for .env file and SECRET_KEY
+REM -------------------------------------------------------
+cd backend
+if not exist ".env" (
+    echo ERROR: .env file not found! Also, make sure to set SECRET_KEY in .env file.
+    pause
+    exit /b
+)
+cd ..
+
+REM -------------------------------------------------------
+REM Apply migrations ONLY if database does not exist
+REM -------------------------------------------------------
+if not exist "backend\db.sqlite3" (
+    echo No database found. Running initial migrations...
+    cd backend
+    python manage.py migrate --noinput
+    cd ..
+) else (
+    echo Database found. Skipping migrations.
+)
+
+REM -------------------------------------------------------
 REM Install backend dependencies
 REM -------------------------------------------------------
 echo Installing backend dependencies...
@@ -67,11 +90,45 @@ echo Starting React frontend...
 start "" cmd /k "cd frontend && npm start"
 
 REM -------------------------------------------------------
-REM Open browser
+REM If argument is "test", run linting and tests
 REM -------------------------------------------------------
-echo Opening browser...
-timeout /t 4 >nul
-start http://localhost:3000
+IF "%1"=="test" (
+    echo Running linting and tests...
+    
+    REM -------------------------------------------------------
+    REM Lint with flake8
+    REM -------------------------------------------------------
+    echo.
+    echo -------------------------------------------------------
+    echo Running flake8 linting on backend...
+    echo -------------------------------------------------------
+    cd backend
+    flake8 . --ignore=E501,W292,W503
+    cd ..
+
+    REM -------------------------------------------------------
+    REM Run Pytest (Backend tests)
+    REM -------------------------------------------------------
+    echo.
+    echo -------------------------------------------------------
+    cd backend
+    echo Running pytest on backend...
+    echo -------------------------------------------------------
+    pytest
+    cd ..
+
+    REM -------------------------------------------------------
+    REM Run Jest (Frontend tests)
+    echo.
+    echo -------------------------------------------------------
+    cd frontend
+    echo Running Jest tests on frontend...
+    echo -------------------------------------------------------
+    npm test -- --watchAll=false
+    cd ..
+    REM -------------------------------------------------------
+)
 
 echo Application started successfully!
+echo PS: If you want to run linting and tests, please run 'run_tests_and_lint.bat'.
 pause
