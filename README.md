@@ -110,5 +110,5 @@ You can review or modify the pipeline by editing the `fullstack_ci.yml` file.
 See the `docs/` folder for detailed requirements and refinement notes.
 
 ## Author
-
+ 
 Tiberiu Gabriel Suditu
