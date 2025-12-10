@@ -48,18 +48,6 @@ if not exist ".env" (
 cd ..
 
 REM -------------------------------------------------------
-REM Apply migrations ONLY if database does not exist
-REM -------------------------------------------------------
-if not exist "backend\db.sqlite3" (
-    echo No database found. Running initial migrations...
-    cd backend
-    python manage.py migrate --noinput
-    cd ..
-) else (
-    echo Database found. Skipping migrations.
-)
-
-REM -------------------------------------------------------
 REM Install backend dependencies
 REM -------------------------------------------------------
 echo Installing backend dependencies...
@@ -75,6 +63,18 @@ IF NOT EXIST "frontend\node_modules" (
     popd
 ) ELSE (
     echo Frontend dependencies already installed.
+)
+
+REM -------------------------------------------------------
+REM Apply migrations ONLY if database does not exist
+REM -------------------------------------------------------
+if not exist "backend\db.sqlite3" (
+    echo No database found. Running initial migrations...
+    cd backend
+    python manage.py migrate --noinput
+    cd ..
+) else (
+    echo Database found. Skipping migrations.
 )
 
 REM -------------------------------------------------------
