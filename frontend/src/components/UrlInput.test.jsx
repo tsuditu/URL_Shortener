@@ -4,6 +4,8 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import UrlInput from './UrlInput';
+import { vi } from 'vitest';
+
 
 describe('UrlInput Component', () => {
   // Test: verifies that input and button are displayed
@@ -24,7 +26,7 @@ describe('UrlInput Component', () => {
 
   // Test: checks that typing in input triggers setInputUrl function
   test('calls setInputUrl when typing in input', () => {
-    const mockSetInputUrl = jest.fn(); // mock function to track calls
+    const mockSetInputUrl = vi.fn(); // mock function to track calls
     render(
       <UrlInput
         inputUrl=""
