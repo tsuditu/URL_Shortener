@@ -15,10 +15,10 @@ This folder contains the Django backend for the URL Shortener application.
    ```
 3. Install dependencies from the root project:
    ```sh
-   go to root project:
+   (from project root)
    pip install -r requirements.txt
    ```
-4. Set up your `.env` file with required environment variables (e.g., `SECRET_KEY`).
+4. Ensure your `.env` file exists (copied from `.env.example` if missing) and set `SECRET_KEY`.
 5. Run migrations:
    ```sh
    python manage.py migrate
@@ -31,6 +31,9 @@ This folder contains the Django backend for the URL Shortener application.
    ```sh
    python manage.py runserver
    ```
+
+## Environment Variables
+- See `.env.example` for required variables (e.g., `SECRET_KEY`).
 
 ## Running Tests
 

@@ -8,7 +8,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from .models import URL
-from urllib.parse import urlparse
 import json
 import hashlib
 
@@ -18,9 +17,6 @@ def api_shorten(request):
     if request.method == "POST":
         data = json.loads(request.body)
         original_url = data.get("url", "").strip()
-        # Extract origin (scheme + netloc) for constructing short URL
-        parsed_url = urlparse(original_url)
-        origin_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
 
         if not original_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
@@ -35,7 +31,7 @@ def api_shorten(request):
         # Check if the URL already exists in the DB
         existing = URL.objects.filter(original_url=original_url).first()
         if existing:
-            short_url = f"{origin_url}/{existing.short_code}"
+            short_url = f"/{existing.short_code}"
             return JsonResponse({
                 'original_url': existing.original_url,
                 'short_url': short_url
@@ -45,7 +41,7 @@ def api_shorten(request):
 
         # Save the URL in the database
         new_url = URL.objects.create(original_url=original_url, short_code=short_code)
-        short_url = f"{origin_url}/{new_url.short_code}"
+        short_url = f"/{new_url.short_code}"
 
         return JsonResponse({
             "original_url": original_url,

@@ -6,7 +6,7 @@ import { Spinner } from 'reactstrap';
 
 // Main React component of the app.
 // When the project runs with `npm start`, React automatically calls this function
-// (from index.js) and renders its returned JSX inside <div id="root"> in index.html.
+// (from main.jsx) and renders its returned JSX inside <div id="root"> in index.html.
 // The frontend server opens http://localhost:3000 to serve this React app (including index.html).
 // Index.html contains a div with id "root" where this App component is mounted and that's how it will be displayed in the browser.
 
@@ -15,6 +15,8 @@ function App() {
   const [inputUrl, setInputUrl] = useState('');
   // State for the generated short URL
   const [shortUrl, setShortUrl] = useState('');
+  // State for display URL text
+  const [displayUrl, setDisplayUrl] = useState('');
   // State to indicate if a request is in progress (for loading spinner)
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +39,7 @@ function App() {
 
     try {
       // Send POST request to Django backend API to shorten the URL
-      const res = await fetch('http://127.0.0.1:8000/api/shorten/', {
+      const res = await fetch('/api/shorten/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,6 +51,13 @@ function App() {
       const data = await res.json();
       if (data.short_url) {
         setShortUrl(data.short_url); // Update state with new short URL
+        try {
+          const parsed = new URL(inputUrl);
+          const code = data.short_url.split('/').pop();
+          setDisplayUrl(`${parsed.origin}/${code}`);
+        } catch {
+          setDisplayUrl(data.short_url); // fallback
+        }
       } else {
         alert(data.error || 'Something went wrong!');
       }
@@ -81,7 +90,8 @@ function App() {
         handleShorten={handleShorten}
         loading={loading}
       />
-      {!loading && <ShortLink shortUrl={shortUrl} />}
+      {/* Display the ShortLink component only when not loading */}
+      {!loading && <ShortLink shortUrl={shortUrl} displayUrl={displayUrl}/>}
     </div>
   );
 }

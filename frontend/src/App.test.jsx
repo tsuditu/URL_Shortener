@@ -4,6 +4,7 @@
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
+import { vi } from 'vitest';
 
 // Before each test, mock the global fetch to avoid real network requests
 // Detailed explanation:
@@ -11,7 +12,7 @@ import App from './App';
 // - This mock returns a resolved promise with a JSON payload containing a short_url
 // - This simulates a successful backend response for our tests (this will be used in the below tests)
 beforeEach(() => {
-  global.fetch = jest.fn(() =>
+  global.fetch = vi.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve({ short_url: 'http://127.0.0.1:8000/test123' }),
     })
@@ -20,12 +21,12 @@ beforeEach(() => {
 
 // After each test, clear any previous mock data or calls
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 // Before all tests, mock window.alert to prevent jsdom crash
 beforeAll(() => {
-  window.alert = jest.fn(); // Prevents "Not implemented: window.alert" error
+  window.alert = vi.fn(); // Prevents "Not implemented: window.alert" error
 });
 
 describe('App Component', () => {
