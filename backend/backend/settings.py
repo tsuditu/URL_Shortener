@@ -49,7 +49,16 @@ DEBUG = False
 
 # ALLOWED_HOSTS defines which domains/hosts are allowed to serve this app.
 # When in production, this should include your real domain (e.g. 'myapp.com').
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+allowed_hosts_env = None
+if os.environ.get('GITHUB_ACTIONS') == 'true':
+    allowed_hosts_env = os.environ.get('ALLOWED_HOSTS')
+else:
+    allowed_hosts_env = env.get('ALLOWED_HOSTS')
+
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
+else:
+    raise ValueError("ALLOWED_HOSTS not found in environment or .env file")
 
 
 # Application definition
