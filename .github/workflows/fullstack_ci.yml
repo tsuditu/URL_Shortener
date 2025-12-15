@@ -130,7 +130,12 @@ jobs:
 
       # Step 3: Install project dependencies (React, libraries, etc.)
       - name: Install dependencies
-        run: npm ci                    # Clean install using package-lock.json for reproducibility
+        run: npm ci                    
+        # Clean install using package-lock.json for reproducibility
+        # We use `npm ci` in CI to ensure deterministic dependency installation.
+        # It relies strictly on package-lock.json, guaranteeing identical versions,
+        # fully reproducible builds, and avoiding conflicts caused by `npm install`.
+
 
       # Step 4: Run React unit tests (non-interactive mode for CI)
       - name: Run React tests
