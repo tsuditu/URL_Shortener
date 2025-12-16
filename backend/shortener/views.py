@@ -7,6 +7,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from .models import URL
 import json
 import hashlib
@@ -72,3 +73,32 @@ def redirect_short_url(request, code):
     except Exception as e:
         # Handle unexpected server errors gracefully
         return JsonResponse({"error": str(e)}, status=500)
+
+
+def api_history(request):
+    """
+    API endpoint to retrieve paginated history of shortened URLs.
+    Accepts 'page' and 'page_size' as GET parameters for pagination.
+    """
+    if request.method == "GET":
+        page = int(request.GET.get("page", 1))
+        page_size = int(request.GET.get("page_size", 10))
+        urls = URL.objects.order_by("-created_at")
+        paginator = Paginator(urls, page_size)
+        page_obj = paginator.get_page(page)
+        history = [
+            {
+                "original_url": url.original_url,
+                "short_code": url.short_code,
+                "short_url": f"/{url.short_code}",
+                "created_at": url.created_at.isoformat()
+            }
+            for url in page_obj
+        ]
+        return JsonResponse({
+            "history": history,
+            "page": page_obj.number,
+            "num_pages": paginator.num_pages,
+            "total": paginator.count
+        })
+    return JsonResponse({"error": "Invalid request method"}, status=405)

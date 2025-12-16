@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UrlInput from './components/UrlInput';
 import ShortLink from './components/ShortLink';
 import { Spinner } from 'reactstrap';
+import HistoryList from './components/HistoryList';
 
 // Main React component of the app.
 // When the project runs with `npm start`, React automatically calls this function
@@ -19,6 +20,24 @@ function App() {
   const [displayUrl, setDisplayUrl] = useState('');
   // State to indicate if a request is in progress (for loading spinner)
   const [loading, setLoading] = useState(false);
+
+  // State for history list
+  const [history, setHistory] = useState([]);
+
+  // Fetch history from backend
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch('/api/history/?page=1&page_size=10');
+      const data = await res.json();
+      if (data.history) setHistory(data.history);
+    } catch (err) {
+      setHistory([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   // Handles the click event for shortening the URL
   const handleShorten = async () => {
@@ -61,6 +80,8 @@ function App() {
       } else {
         alert(data.error || 'Something went wrong!');
       }
+      // Refetch history after shortening
+      fetchHistory();
     } catch (err) {
       // Handle network or server errors
       console.error('Error communicating with Django:', err);
@@ -70,7 +91,7 @@ function App() {
     }
   };
 
-  // Render the main UI: input form and short link result
+  // Render the main UI: input form, short link result, and history
   return (
     <div className="container text-center mt-5">
       <h1>URL Shortener MVP</h1>
@@ -91,7 +112,10 @@ function App() {
         loading={loading}
       />
       {/* Display the ShortLink component only when not loading */}
-      {!loading && <ShortLink shortUrl={shortUrl} displayUrl={displayUrl}/>}
+      {!loading && <ShortLink shortUrl={shortUrl} displayUrl={displayUrl}/>} 
+
+      {/* History list */}
+      <HistoryList history={history} />
     </div>
   );
 }
