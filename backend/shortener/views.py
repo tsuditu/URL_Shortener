@@ -83,7 +83,7 @@ def api_history(request):
     if request.method == "GET":
         page = int(request.GET.get("page", 1))
         page_size = int(request.GET.get("page_size", 10))
-        urls = URL.objects.order_by("-created_at")
+        urls = URL.objects.order_by("-created_at", "-id")
         paginator = Paginator(urls, page_size)
         page_obj = paginator.get_page(page)
         history = [

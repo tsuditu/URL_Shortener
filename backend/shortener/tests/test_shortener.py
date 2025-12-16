@@ -1,4 +1,5 @@
 import pytest
+import time
 from django.urls import reverse
 from shortener.models import URL
 
@@ -70,6 +71,7 @@ def test_api_history_returns_recent_links(client):
     ]
     for url in urls:
         client.post(reverse("api_shorten_endpoint"), {"url": url}, content_type="application/json")
+        time.sleep(0.01)  # Ensure different timestamps
 
     # No params (default page=1, page_size=10)
     response = client.get(reverse("api_history_endpoint"))
@@ -78,9 +80,9 @@ def test_api_history_returns_recent_links(client):
     assert "history" in data
     assert len(data["history"]) == 3
 
-    # Check all URLs are present, regardless of order
+    # Verify strict ordering: most recent links appear first
     returned_urls = [item["original_url"] for item in data["history"]]
-    assert set(returned_urls) == set(urls)
+    assert returned_urls == urls[::-1]
 
     # Test pagination: page_size=2
     response = client.get(reverse("api_history_endpoint") + "?page=1&page_size=2")
