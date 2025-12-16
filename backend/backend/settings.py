@@ -16,6 +16,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+allowed_hosts_env = None
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,6 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if os.environ.get('GITHUB_ACTIONS') == 'true':
     # Running in GitHub Actions, get secret from environment variable
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    # Get ALLOWED_HOSTS from environment variable in GitHub Actions
+    # ALLOWED_HOSTS defines which domains/hosts are allowed to serve this app.
+    # When in production, this should include your real domain (e.g. 'myapp.com').
+    allowed_hosts_env = os.environ.get('ALLOWED_HOSTS')
+    # In GitHub Actions, we always set DEBUG to False for safety
+    # SECURITY WARNING: don't run with debug turned on in production!
+    # DEBUG=True is used during development to display detailed error pages.
+    # In production, DEBUG must always be False to hide sensitive information.
+    DEBUG = False
 else:
     # Load environment variables from the .env file located in the project root.
     # This allows you to keep secret keys and sensitive info out of your code.
@@ -36,21 +46,22 @@ else:
         raise FileNotFoundError("Warning: .env file not found. Please create one in the project root.")
     # Running locally, get secret from .env file
     SECRET_KEY = env.get('SECRET_KEY')
+    # Get ALLOWED_HOSTS from .env file
+    allowed_hosts_env = env.get('ALLOWED_HOSTS')
+    # Get DEBUG from .env file (default to True if not set)
+    DEBUG = env.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 # Raise an error if SECRET_KEY is not found
 # This ensures your app never runs without a key (which would be unsafe).
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY not found in environment or .env file")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG=True is used during development to display detailed error pages.
-# In production, DEBUG must always be False to hide sensitive information.
-DEBUG = False
-
-# ALLOWED_HOSTS defines which domains/hosts are allowed to serve this app.
-# When in production, this should include your real domain (e.g. 'myapp.com').
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
+# Configure ALLOWED_HOSTS from environment variable or .env file
+# Split the comma-separated string into a list
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
+else:
+    raise ValueError("ALLOWED_HOSTS not found in environment or .env file")
 
 # Application definition
 INSTALLED_APPS = [
@@ -60,8 +71,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',                  # CORS support (ensures communication between frontend and backend)
-    'shortener',                    # URL shortener app
+    'shortener',                      # URL shortener app
+    # 'corsheaders',                  # CORS support (ensures communication between frontend and backend)
+                                      # Need to uncomment if CORS is to be enabled, in case app will be accessed from different origins, other than frontend at localhost:3000
 ]
 
 # MIDDLEWARE is a list of security and request-processing layers.
@@ -74,15 +86,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',    # here is applied CORS from INSTALLED_APPS, as a security measure
+    # 'corsheaders.middleware.CorsMiddleware',    # here is applied CORS from INSTALLED_APPS, as a security measure
+                                                  # Frontend communicates with Backend via vite.config.js proxy during development - no need for CORS
+                                                  # Need to uncomment if CORS is to be enabled, in case app will be accessed from different origins, other than frontend at localhost:3000
 ]
 
-# CORS_ALLOWED_ORIGINS defines which frontend origins are allowed to access this backend via cross-origin requests.
-# This is needed when your frontend (e.g., React at localhost:3000) talks to your Django API during development.
-# Will be modified in production to real frontend domain.
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+# NEED TO UNCOMMENT IF CORS IS TO BE ENABLED
+# # CORS_ALLOWED_ORIGINS defines which frontend origins are allowed to access this backend via cross-origin requests.
+# # This is needed when your frontend (e.g., React at localhost:3000) talks to your Django API during development.
+# # Will be modified in production to real frontend domain.
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+# ]
 
 # ROOT_URLCONF tells Django where to find the main URL routing configuration.
 # This file maps URLs (like /admin or /test-error) to Python view functions.

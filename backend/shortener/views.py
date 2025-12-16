@@ -7,8 +7,8 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from .models import URL
-from urllib.parse import urlparse
 import json
 import hashlib
 
@@ -18,9 +18,6 @@ def api_shorten(request):
     if request.method == "POST":
         data = json.loads(request.body)
         original_url = data.get("url", "").strip()
-        # Extract origin (scheme + netloc) for constructing short URL
-        parsed_url = urlparse(original_url)
-        origin_url = f'{parsed_url.scheme}://{parsed_url.netloc}'
 
         if not original_url:
             return JsonResponse({"error": "No URL provided"}, status=400)
@@ -35,7 +32,7 @@ def api_shorten(request):
         # Check if the URL already exists in the DB
         existing = URL.objects.filter(original_url=original_url).first()
         if existing:
-            short_url = f"{origin_url}/{existing.short_code}"
+            short_url = f"/{existing.short_code}"
             return JsonResponse({
                 'original_url': existing.original_url,
                 'short_url': short_url
@@ -45,7 +42,7 @@ def api_shorten(request):
 
         # Save the URL in the database
         new_url = URL.objects.create(original_url=original_url, short_code=short_code)
-        short_url = f"{origin_url}/{new_url.short_code}"
+        short_url = f"/{new_url.short_code}"
 
         return JsonResponse({
             "original_url": original_url,
@@ -76,3 +73,32 @@ def redirect_short_url(request, code):
     except Exception as e:
         # Handle unexpected server errors gracefully
         return JsonResponse({"error": str(e)}, status=500)
+
+
+def api_history(request):
+    """
+    API endpoint to retrieve paginated history of shortened URLs.
+    Accepts 'page' and 'page_size' as GET parameters for pagination.
+    """
+    if request.method == "GET":
+        page = int(request.GET.get("page", 1))
+        page_size = int(request.GET.get("page_size", 10))
+        urls = URL.objects.order_by("-created_at", "-id")
+        paginator = Paginator(urls, page_size)
+        page_obj = paginator.get_page(page)
+        history = [
+            {
+                "original_url": url.original_url,
+                "short_code": url.short_code,
+                "short_url": f"/{url.short_code}",
+                "created_at": url.created_at.isoformat()
+            }
+            for url in page_obj
+        ]
+        return JsonResponse({
+            "history": history,
+            "page": page_obj.number,
+            "num_pages": paginator.num_pages,
+            "total": paginator.count
+        })
+    return JsonResponse({"error": "Invalid request method"}, status=405)

@@ -1,4 +1,5 @@
 import pytest
+import time
 from django.urls import reverse
 from shortener.models import URL
 
@@ -55,3 +56,38 @@ def test_invalid_url_returns_error(client):
 
     assert response.status_code == 400
     assert response.json()["error"] == "Invalid URL format"
+
+
+@pytest.mark.django_db
+def test_api_history_returns_recent_links(client):
+    """
+    Test GET /api/history/ returns recent shortened links, paginated and ordered.
+    """
+    # Create 3 links
+    urls = [
+        "https://site1.com",
+        "https://site2.com",
+        "https://site3.com"
+    ]
+    for url in urls:
+        client.post(reverse("api_shorten_endpoint"), {"url": url}, content_type="application/json")
+        time.sleep(0.01)  # Ensure different timestamps
+
+    # No params (default page=1, page_size=10)
+    response = client.get(reverse("api_history_endpoint"))
+    assert response.status_code == 200
+    data = response.json()
+    assert "history" in data
+    assert len(data["history"]) == 3
+
+    # Verify strict ordering: most recent links appear first
+    returned_urls = [item["original_url"] for item in data["history"]]
+    assert returned_urls == urls[::-1]
+
+    # Test pagination: page_size=2
+    response = client.get(reverse("api_history_endpoint") + "?page=1&page_size=2")
+    data = response.json()
+    assert len(data["history"]) == 2
+    assert data["page"] == 1
+    assert data["num_pages"] == 2
+    assert data["total"] == 3

@@ -67,9 +67,9 @@ This script will start both the backend and frontend servers for you.
     ```sh
     npm install
     ```
-4. **Start the frontend development server:**
+4. **Start the frontend development server (Vite):**
     ```sh
-    npm start
+    npm run dev
     ```
 
 ## Running Tests & Linting
@@ -86,10 +86,10 @@ This script will start both the backend and frontend servers for you.
     ```
 
 ### Frontend
-- **Run tests:**
+- **Run tests (Vitest):**
     ```sh
     cd frontend
-    npm test
+    npm run test
     ```
 
 ## Pipeline Runs

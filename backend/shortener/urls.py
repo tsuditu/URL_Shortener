@@ -8,5 +8,6 @@ from . import views
 
 urlpatterns = [
     path('api/shorten/', views.api_shorten, name='api_shorten_endpoint'),
+    path('api/history/', views.api_history, name='api_history_endpoint'),
     path('<str:code>/', views.redirect_short_url, name='redirect_short_url_endpoint'),
 ]

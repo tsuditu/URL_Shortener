@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UrlInput from './components/UrlInput';
 import ShortLink from './components/ShortLink';
 import { Spinner } from 'reactstrap';
+import HistoryList from './components/HistoryList';
 
 // Main React component of the app.
 // When the project runs with `npm start`, React automatically calls this function
-// (from index.js) and renders its returned JSX inside <div id="root"> in index.html.
+// (from main.jsx) and renders its returned JSX inside <div id="root"> in index.html.
 // The frontend server opens http://localhost:3000 to serve this React app (including index.html).
 // Index.html contains a div with id "root" where this App component is mounted and that's how it will be displayed in the browser.
 
@@ -15,8 +16,28 @@ function App() {
   const [inputUrl, setInputUrl] = useState('');
   // State for the generated short URL
   const [shortUrl, setShortUrl] = useState('');
+  // State for display URL text
+  const [displayUrl, setDisplayUrl] = useState('');
   // State to indicate if a request is in progress (for loading spinner)
   const [loading, setLoading] = useState(false);
+
+  // State for history list
+  const [history, setHistory] = useState([]);
+
+  // Fetch history from backend
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch('/api/history/?page=1&page_size=10');
+      const data = await res.json();
+      if (data.history) setHistory(data.history);
+    } catch (err) {
+      setHistory([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   // Handles the click event for shortening the URL
   const handleShorten = async () => {
@@ -37,7 +58,7 @@ function App() {
 
     try {
       // Send POST request to Django backend API to shorten the URL
-      const res = await fetch('http://127.0.0.1:8000/api/shorten/', {
+      const res = await fetch('/api/shorten/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,9 +70,18 @@ function App() {
       const data = await res.json();
       if (data.short_url) {
         setShortUrl(data.short_url); // Update state with new short URL
+        try {
+          const parsed = new URL(inputUrl);
+          const code = data.short_url.split('/').pop();
+          setDisplayUrl(`${parsed.origin}/${code}`);
+        } catch {
+          setDisplayUrl(data.short_url); // fallback
+        }
       } else {
         alert(data.error || 'Something went wrong!');
       }
+      // Refetch history after shortening
+      fetchHistory();
     } catch (err) {
       // Handle network or server errors
       console.error('Error communicating with Django:', err);
@@ -61,7 +91,7 @@ function App() {
     }
   };
 
-  // Render the main UI: input form and short link result
+  // Render the main UI: input form, short link result, and history
   return (
     <div className="container text-center mt-5">
       <h1>URL Shortener MVP</h1>
@@ -81,7 +111,11 @@ function App() {
         handleShorten={handleShorten}
         loading={loading}
       />
-      {!loading && <ShortLink shortUrl={shortUrl} />}
+      {/* Display the ShortLink component only when not loading */}
+      {!loading && <ShortLink shortUrl={shortUrl} displayUrl={displayUrl}/>} 
+
+      {/* History list */}
+      <HistoryList history={history} />
     </div>
   );
 }
